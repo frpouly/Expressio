@@ -17,4 +17,20 @@ public class Expression
     
         return Content.Split(" ").Skip(1);
     }
+
+    public string SplitFirst(string word)
+    {
+        if(Content == null)
+            return "";
+
+        return Content.Split(word, 2).First() + word;
+    }
+
+    public string SplitLast(string word) 
+    {
+        if(Content == null)
+            return "";
+
+        return Content.Split(word, 2).Last();
+    }
 }

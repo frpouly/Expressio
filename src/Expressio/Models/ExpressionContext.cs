@@ -9,6 +9,11 @@ public class ExpressionContext : DbContext
     {
     }
 
+    public ExpressionContext()
+        : base()
+    {
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -17,5 +22,5 @@ public class ExpressionContext : DbContext
         );
     }
 
-    public DbSet<Expression> Expressions { get; set; }
+    public virtual DbSet<Expression> Expressions { get; set; }
 }
