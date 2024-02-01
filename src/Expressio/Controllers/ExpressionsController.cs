@@ -17,6 +17,7 @@ namespace Expressio.Controllers
 
         public ExpressionsController(ExpressionContext context)
         {
+            context.Database.EnsureCreated();
             _context = context;
         }
 

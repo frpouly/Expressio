@@ -24,7 +24,7 @@ namespace Expressio.UnitTests.Models
             FileLoader loader = new FileLoader(path);
             var results = loader.Load();
 
-            Assert.Equal(results.Last().Id + 1, results.Count());
+            Assert.Equal(results.Last().Id, results.Count());
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace Expressio.UnitTests.Models
             var results = loader.Load();
 
             Assert.Equal("parler dans sa barbe", results.Last().Content);
-            Assert.Equal("les doigts dans le nez", results.First().Content);
+            Assert.Equal("se regarder le nombril", results.First().Content);
         }
     }
 }

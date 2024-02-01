@@ -9,5 +9,13 @@ public class ExpressionContext : DbContext
     {
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Expression>().HasData(
+            new FileLoader("Resources/expressions_fr.json").Load()
+        );
+    }
+
     public DbSet<Expression> Expressions { get; set; }
 }
