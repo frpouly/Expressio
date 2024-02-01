@@ -15,7 +15,7 @@ public class Expression
             return Array.Empty<string>();
         }
     
-        return Content.Split(" ").Skip(1);
+        return Content.Split(" ").Skip(1).Reverse().Skip(1);
     }
 
     public string SplitFirst(string word)

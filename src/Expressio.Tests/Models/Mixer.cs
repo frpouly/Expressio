@@ -7,17 +7,16 @@ namespace Expressio.UnitTests.Models
     public class Mixer_Generate
     {
         [Fact]
-        public void ItGeneratesMixedSentence()
+        public async void ItGeneratesMixedSentence()
         {
             var mixer = CreateMixer();
-            var val = mixer.Generate().Content;
             var regEx = @"frotter le fromage|entre la poire et le lard ensemble";
             var value = mixer.Generate();
             Assert.Matches(regEx, value.Content);
         }
 
         [Fact]
-        public void ItGeneratesTheSameExpressionWithSeed()
+        public async void ItGeneratesTheSameExpressionWithSeed()
         {
             var mixer = CreateMixer();
             int seed = 78833297;
