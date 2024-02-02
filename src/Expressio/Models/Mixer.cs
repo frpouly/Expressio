@@ -1,4 +1,5 @@
 
+using System.Collections.Immutable;
 using Humanizer;
 
 namespace Expressio.Models;
@@ -7,7 +8,8 @@ public class Mixer
 {
     private readonly ExpressionContext _context;
 
-    private Dictionary<string, List<Expression>> _dic = new();
+    private Dictionary<string, Possibilities> _dic = new();
+    private List<string> _weights = new();
 
     public Mixer(ExpressionContext context)
     {
@@ -19,13 +21,8 @@ public class Mixer
     {
         int usedSeed = seed ?? Environment.TickCount;
         Random rand = new Random(usedSeed);
-        var element = _dic.ElementAt(rand.Next(0, _dic.Count));
-        var expressions = element.Value.OrderBy(e => rand.Next()).Take(2).ToList();
-        return new MixedExpression(
-            expressions.First().SplitFirst(element.Key) + expressions.Last().SplitLast(element.Key),
-            [expressions.First(), expressions.Last()],
-            usedSeed
-        );
+        var word = _weights.ElementAt(rand.Next(0, _dic.Count));
+        return _dic[word].Generate(rand, usedSeed);
     }
 
     private void PopulateDictionnary()
@@ -34,15 +31,19 @@ public class Mixer
         {
             foreach(string word in e.Words())
             {
-                if(_dic.ContainsKey(word))
-                     _dic[word].Add(e);
+                if(_dic.TryGetValue(word, out Possibilities? value))
+                    value.AddExpression(e);
                 else
-                    _dic[word] = new List<Expression>(){ e };
+                    _dic[word] = new Possibilities(word, e);
                    
             }
         }
+        foreach(var kv in _dic)
+            kv.Value.RemoveDuplicates();
         // Remove all the Words that are on only one expression
-        _dic = _dic.Where(kv => kv.Value.Distinct().Count() > 1)
-                   .ToDictionary(kv => kv.Key, kv => kv.Value.Distinct().ToList());
+        _dic = _dic.Where(kv => kv.Value.NumberOfPossibilities > 1)
+                   .ToDictionary(kv => kv.Key, kv => kv.Value);
+        foreach(var kv in _dic)
+            _weights.AddRange(Enumerable.Repeat(kv.Key, kv.Value.NumberOfPossibilities));
     }
 }

@@ -31,6 +31,6 @@ public class Expression
         if(Content == null)
             return "";
 
-        return Content.Split(word, 2).Last();
+        return Content.Split($" {word} ", 2).Last();
     }
 }
