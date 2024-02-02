@@ -14,7 +14,7 @@ public class FileLoader
         Path = path;
     }
 
-    public IEnumerable<Expression> Load()
+    public List<Expression> Load()
     {
         using (StreamReader r = new StreamReader(Path))
         {

@@ -9,13 +9,13 @@ using Expressio.Models;
 
 namespace Expressio.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/{lang}/[controller]")]
     [ApiController]
     public class ExpressionsController : ControllerBase
     {
-        private readonly ExpressionContext _context;
+        private readonly ExpressioContext _context;
 
-        public ExpressionsController(ExpressionContext context)
+        public ExpressionsController(ExpressioContext context)
         {
             context.Database.EnsureCreated();
             _context = context;
@@ -23,16 +23,26 @@ namespace Expressio.Controllers
 
         // GET: api/Expressions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Expression>>> GetExpressions()
+        public async Task<ActionResult<IEnumerable<ExpressionDTO>>> GetExpressions(string lang)
         {
-            return await _context.Expressions.ToListAsync();
+            return await _context
+                .Expressions
+                .Include(e => e.Language)
+                .Select(e =>
+                    new ExpressionDTO() {
+                        Id = e.Id,
+                        Content = e.Content,
+                        Definitions = e.Definitions
+                    }
+                )
+                .ToListAsync();
         }
 
         // GET: api/Expressions/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Expression>> GetExpression(long id)
         {
-            var Expression = await _context.Expressions.FindAsync(id);
+            var Expression = _context.Languages.First().Expressions.ToList().Find(e => e.Id == id);
 
             if (Expression == null)
             {
@@ -40,11 +50,6 @@ namespace Expressio.Controllers
             }
 
             return Expression;
-        }
-
-        private bool ExpressionExists(long id)
-        {
-            return _context.Expressions.Any(e => e.Id == id);
         }
     }
 }

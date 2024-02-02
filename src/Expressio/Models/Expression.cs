@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Humanizer;
 
 namespace Expressio.Models;
@@ -6,7 +8,9 @@ public class Expression
 {
     public long Id { get; set; }
     public required string Content { get; set; }
-    public string[]? Definitions { get; set; }
+    public List<string>? Definitions { get; set; }
+    public long LanguageId { get; set; }
+    public Language Language { get; set; }
   
     public IEnumerable<string> Words()
     {

@@ -8,14 +8,14 @@ namespace Expressio.Controllers
     [ApiController]
     public class MixedExpressionsController : ControllerBase
     {
-        private readonly ExpressionContext _context;
+        private readonly ExpressioContext _context;
         private readonly Mixer _mixer;
 
-        public MixedExpressionsController(ExpressionContext context)
+        public MixedExpressionsController(ExpressioContext context)
         {
             context.Database.EnsureCreated();
             _context = context;
-            _mixer = new Mixer(_context.Expressions.ToList());
+            _mixer = new Mixer(_context.Languages.First().Expressions.ToList());
         }
 
         [HttpGet("random")]
