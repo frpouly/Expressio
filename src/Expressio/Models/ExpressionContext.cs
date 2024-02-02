@@ -22,5 +22,5 @@ public class ExpressionContext : DbContext
         );
     }
 
-    public DbSet<Expression> Expressions { get; set; }
+    public virtual DbSet<Expression> Expressions { get; set; }
 }

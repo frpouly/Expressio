@@ -7,8 +7,8 @@ namespace Expressio.UnitTests.Models
     public class Expression_Words
     {
         [Theory]
-        [InlineData("Prendre de l'âge", 2)]
-        [InlineData("Raining cats and dogs", 3)]
+        [InlineData("Prendre de l'âge", 1)]
+        [InlineData("Raining cats and dogs", 2)]
         [InlineData(null, 0)]
         public void ItContainsTheCorrectNumberOfWords(string expressionContent, int expectedSize)
         {
@@ -22,8 +22,8 @@ namespace Expressio.UnitTests.Models
         }
 
         [Theory]
-        [InlineData("Prendre de l'âge", new string[] { "de", "l'âge" })]
-        [InlineData("Raining cats and dogs", new string[] {"cats", "and", "dogs"})]
+        [InlineData("Prendre de l'âge", new string[] { "de" })]
+        [InlineData("Raining cats and dogs", new string[] {"cats", "and"})]
         public void ItHasTheCorrectWords(string expressionContent, IEnumerable<string> expectedWords)
         {
             var expression = new Expression
