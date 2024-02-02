@@ -15,7 +15,7 @@ namespace Expressio.Controllers
         {
             context.Database.EnsureCreated();
             _context = context;
-            _mixer = new Mixer(_context);
+            _mixer = new Mixer(_context.Expressions.ToList());
         }
 
         [HttpGet("random")]

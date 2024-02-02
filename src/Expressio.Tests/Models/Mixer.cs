@@ -7,7 +7,7 @@ namespace Expressio.UnitTests.Models
     public class Mixer_Generate
     {
         [Fact]
-        public async void ItGeneratesMixedSentence()
+        public void ItGeneratesMixedSentence()
         {
             var mixer = CreateMixer();
             var regEx = @"frotter le fromage|entre la poire et le lard ensemble";
@@ -16,7 +16,7 @@ namespace Expressio.UnitTests.Models
         }
 
         [Fact]
-        public async void ItGeneratesTheSameExpressionWithSeed()
+        public void ItGeneratesTheSameExpressionWithSeed()
         {
             var mixer = CreateMixer();
             int seed = 78833297;
@@ -30,18 +30,9 @@ namespace Expressio.UnitTests.Models
             {
                 new Expression { Id = 1, Content = "frotter le lard ensemble", Definitions = []},
                 new Expression { Id = 2, Content = "entre la poire et le fromage", Definitions = []}
-            }.AsQueryable();
-            
-            var mockSet = new Mock<DbSet<Expression>>();
-            mockSet.As<IQueryable<Expression>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<Expression>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<Expression>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<Expression>>().Setup(m => m.GetEnumerator()).Returns(() => data.GetEnumerator());
+            };
 
-            var mockContext = new Mock<ExpressionContext>();
-            mockContext.Setup(c => c.Expressions).Returns(mockSet.Object);
-
-            return new Mixer(mockContext.Object);
+            return new Mixer(data);
         }
     }
 }

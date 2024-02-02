@@ -6,14 +6,14 @@ namespace Expressio.Models;
 
 public class Mixer
 {
-    private readonly ExpressionContext _context;
+    private readonly List<Expression> _expressions;
 
     private Dictionary<string, Possibilities> _dic = new();
     private List<string> _weights = new();
 
-    public Mixer(ExpressionContext context)
+    public Mixer(List<Expression> expressions)
     {
-        _context = context;
+        _expressions = expressions;
         PopulateDictionnary();
     }
 
@@ -27,7 +27,7 @@ public class Mixer
 
     private void PopulateDictionnary()
     {
-        foreach(Expression e in _context.Expressions.ToList())
+        foreach(Expression e in _expressions)
         {
             foreach(string word in e.Words())
             {
