@@ -18,11 +18,16 @@ namespace Expressio.Controllers
             _mixer = new Mixer(_context);
         }
 
-        // GET: api/Expressions
         [HttpGet("random")]
-        public async Task<ActionResult<MixedExpression>> GetMixedRandomExpression()
+        public async Task<ActionResult<MixedExpression>> GetRandomMixedExpression()
         {
             return await Task.Run(() => _mixer.Generate());
+        }
+
+        [HttpGet("seeded/{seed}")]
+        public async Task<ActionResult<MixedExpression>> GetSeededMixedExpression(int seed)
+        {
+            return await Task.Run(() => _mixer.Generate(seed));
         }
     }
 }

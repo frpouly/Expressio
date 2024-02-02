@@ -5,7 +5,7 @@ namespace Expressio.Models;
 public class Expression
 {
     public long Id { get; set; }
-    public string? Content { get; set; }
+    public required string Content { get; set; }
     public string[]? Definitions { get; set; }
   
     public IEnumerable<string> Words()

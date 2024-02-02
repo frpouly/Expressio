@@ -42,6 +42,7 @@ public class Mixer
             }
         }
         // Remove all the Words that are on only one expression
-        _dic = _dic.Where(kv => kv.Value.Count() > 1).ToDictionary(kv => kv.Key, kv => kv.Value);
+        _dic = _dic.Where(kv => kv.Value.Distinct().Count() > 1)
+                   .ToDictionary(kv => kv.Key, kv => kv.Value.Distinct().ToList());
     }
 }
