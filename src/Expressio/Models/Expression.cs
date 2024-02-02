@@ -23,7 +23,7 @@ public class Expression
         if(Content == null)
             return "";
 
-        return Content.Split(word, 2).First() + word;
+        return Content.Split($" {word} ", 2).First() + " " + word;
     }
 
     public string SplitLast(string word) 

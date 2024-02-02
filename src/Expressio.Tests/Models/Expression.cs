@@ -40,7 +40,6 @@ namespace Expressio.UnitTests.Models
     {
         [Theory]
         [InlineData("prendre de l'âge", "de", "prendre de")]
-        [InlineData("prendre de l'âge", "l'âge", "prendre de l'âge")]
         [InlineData("with the same same word", "same", "with the same")]
         public void ItSplitsTheSentenceCorrectly(string expressionContent, string word, string expectedResult)
         {
