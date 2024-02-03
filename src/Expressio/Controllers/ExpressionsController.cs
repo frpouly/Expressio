@@ -6,50 +6,50 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Expressio.Models;
+using AutoMapper;
 
 namespace Expressio.Controllers
 {
-    [Route("api/{lang}/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ExpressionsController : ControllerBase
     {
         private readonly ExpressioContext _context;
+        private readonly IMapper _mapper;
 
-        public ExpressionsController(ExpressioContext context)
+        public ExpressionsController(ExpressioContext context, IMapper mapper)
         {
             context.Database.EnsureCreated();
             _context = context;
+            _mapper = mapper;
         }
 
-        // GET: api/Expressions
-        [HttpGet]
+        // GET: api/Expressions/:lang
+        [HttpGet("{lang}")]
         public async Task<ActionResult<IEnumerable<ExpressionDTO>>> GetExpressions(string lang)
         {
             return await _context
                 .Expressions
                 .Include(e => e.Language)
+                .Where(e => e.Language.Code == lang)
                 .Select(e =>
-                    new ExpressionDTO() {
-                        Id = e.Id,
-                        Content = e.Content,
-                        Definitions = e.Definitions
-                    }
+                    _mapper.Map<Expression, ExpressionDTO>(e)
                 )
                 .ToListAsync();
         }
 
         // GET: api/Expressions/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Expression>> GetExpression(long id)
+        [HttpGet("item/{id}")]
+        public async Task<ActionResult<ExpressionDTO>> GetExpression(long id)
         {
-            var Expression = _context.Languages.First().Expressions.ToList().Find(e => e.Id == id);
+            var expression = await _context.Expressions.FindAsync(id);
 
-            if (Expression == null)
+            if (expression == null)
             {
                 return NotFound();
             }
 
-            return Expression;
+            return _mapper.Map<Expression, ExpressionDTO>(expression);
         }
     }
 }

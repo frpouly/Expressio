@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 
 namespace Expressio.Models;
@@ -22,10 +23,11 @@ public class ExpressioContext : DbContext
             .HasForeignKey("LanguageId")
             .IsRequired();
         modelBuilder.Entity<Language>().HasData(
-            new Language(){ Id = 1, Code = "fr" }
+            new Language(){ Id = 1, Code = "fr" },
+            new Language(){ Id = 2, Code = "en" }
         );
         modelBuilder.Entity<Expression>().HasData(
-            new FileLoader("Resources/expressions_fr.json").Load().Skip(3000)
+            new FileLoader("Resources/expressions.json").Load()
         );
     }
 

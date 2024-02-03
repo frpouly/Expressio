@@ -10,7 +10,7 @@ namespace Expressio.UnitTests.Models
         [Fact]
         public void ItLoadsTheJSON()
         {
-            string path = "Resources/expressions_fr.json";
+            string path = "Resources/expressions.json";
             FileLoader loader = new FileLoader(path);
 
             var exception = Record.Exception(() => loader.Load());
@@ -20,7 +20,7 @@ namespace Expressio.UnitTests.Models
         [Fact]
         public void ItHasTheCorrectNumberOfExpressions()
         {
-            string path = "Resources/expressions_fr.json";
+            string path = "Resources/expressions.json";
             FileLoader loader = new FileLoader(path);
             var results = loader.Load();
 
@@ -30,11 +30,11 @@ namespace Expressio.UnitTests.Models
         [Fact]
         public void ItHasTheCorrectFirstAndLastExpressions()
         {
-            string path = "Resources/expressions_fr.json";
+            string path = "Resources/expressions.json";
             FileLoader loader = new FileLoader(path);
             var results = loader.Load();
 
-            Assert.Equal("parler dans sa barbe", results.Last().Content);
+            Assert.Equal("youth is wasted on the young", results.Last().Content);
             Assert.Equal("se regarder le nombril", results.First().Content);
         }
     }
