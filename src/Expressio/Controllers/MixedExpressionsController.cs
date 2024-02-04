@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Expressio.Models;
 using System.Collections.Generic;
 using AutoMapper;
+using Asp.Versioning;
 
 namespace Expressio.Controllers
 {
-    [Route("api/[controller]/{lang}")]
+    [ApiVersion(1)]
+    [Route("api/v{v:apiVersion}/[controller]/{lang}")]
     [ApiController]
     public class MixedExpressionsController : ControllerBase
     {

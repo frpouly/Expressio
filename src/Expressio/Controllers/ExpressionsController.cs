@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Expressio.Models;
 using AutoMapper;
+using Asp.Versioning;
 
 namespace Expressio.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion(1)]
+    [Route("api/v{v:apiVersion}/[controller]")]
     [ApiController]
     public class ExpressionsController : ControllerBase
     {
@@ -24,7 +26,7 @@ namespace Expressio.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/Expressions/:lang
+        // GET: api/v1/Expressions/:lang
         [HttpGet("{lang}")]
         public async Task<ActionResult<IEnumerable<ExpressionDTO>>> GetExpressions(string lang)
         {
@@ -38,7 +40,7 @@ namespace Expressio.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Expressions/5
+        // GET: api/v1/Expressions/5
         [HttpGet("item/{id}")]
         public async Task<ActionResult<ExpressionDTO>> GetExpression(long id)
         {
