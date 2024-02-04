@@ -46,7 +46,7 @@ namespace Expressio.Controllers
 
             if (expression == null)
             {
-                return NotFound();
+                return NotFound($"No expression with the following id: {id}");
             }
 
             return _mapper.Map<Expression, ExpressionDTO>(expression);

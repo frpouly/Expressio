@@ -27,15 +27,29 @@ namespace Expressio.Controllers
         [HttpGet("random")]
         public async Task<ActionResult<MixedExpressionDTO>> GetRandomMixedExpression(string lang)
         {
-            var mixed_expression = await Task.Run(() => _mixers[lang].Generate());
-            return _mapper.Map<MixedExpression, MixedExpressionDTO>(mixed_expression);
+            if(_mixers.TryGetValue(lang, out Mixer? mixer))
+            {
+                var mixed_expression = await Task.Run(() => mixer.Generate());
+                return _mapper.Map<MixedExpression, MixedExpressionDTO>(mixed_expression);
+            }
+            else
+            {
+                return NotFound($"Language {lang} is not supported");
+            }
         }
 
         [HttpGet("seeded/{seed}")]
         public async Task<ActionResult<MixedExpressionDTO>> GetSeededMixedExpression(int seed, string lang)
         {
-            var mixed_expression = await Task.Run(() => _mixers[lang].Generate(seed));
-            return _mapper.Map<MixedExpression, MixedExpressionDTO>(mixed_expression);
+            if(_mixers.TryGetValue(lang, out Mixer? mixer))
+            {
+                var mixed_expression = await Task.Run(() => mixer.Generate(seed));
+                return _mapper.Map<MixedExpression, MixedExpressionDTO>(mixed_expression);
+            }
+            else
+            {
+                return NotFound($"Language {lang} is not supported");
+            }
         }
     }
 }
