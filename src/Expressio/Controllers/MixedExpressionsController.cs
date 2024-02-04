@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Expressio.Models;
-using System.Collections.Generic;
 using AutoMapper;
 using Asp.Versioning;
 

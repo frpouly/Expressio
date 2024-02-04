@@ -1,6 +1,3 @@
-using Expressio.Controllers;
-using Microsoft.EntityFrameworkCore;
-
 namespace Expressio.Models;
 
 public class Language
