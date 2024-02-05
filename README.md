@@ -18,8 +18,7 @@ In development environment, a swagger for the API is also accessible through [ht
 ### Using Docker
 
 ```shell
-cd src/Expressio
-docker build -t expressio -f Dockerfile .
+docker build -t expressio -f Dockerfile ./src/Expressio
 docker run -d -p 5289:8080 expressio 
 ```
 
