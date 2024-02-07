@@ -16,7 +16,6 @@ namespace Expressio.Controllers
 
         public ExpressionsController(ExpressioContext context, IMapper mapper)
         {
-            context.Database.EnsureCreated();
             _context = context;
             _mapper = mapper;
         }

@@ -17,7 +17,6 @@ namespace Expressio.Controllers
 
         public MixedExpressionsController(ExpressioContext context, IMapper mapper)
         {
-            context.Database.EnsureCreated();
             _context = context;
             _mapper = mapper;
             foreach(Language l in _context.Languages.Include(l => l.Expressions)) {
